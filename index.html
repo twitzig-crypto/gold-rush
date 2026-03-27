@@ -1,185 +1,177 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.4">
-  <style type="text/css">
-    span.s1 {font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Rush Escape Room</title>
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fdf6e3;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #intro-screen, #game-screen {
+    max-width: 800px;
+    padding: 20px;
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  .choice-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  #stats {
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  #result {
+    margin-top: 20px;
+    min-height: 50px;
+  }
+</style>
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;!DOCTYPE html&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;html lang="en"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;head&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;meta charset="UTF-8"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;title&gt;Gold Rush Escape Room&lt;/title&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;style&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>body { font-family: 'Georgia', serif; background-color: #fdf6e3; color: #333; padding: 20px; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>#game-container { max-width: 800px; margin: auto; text-align: center; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>img { max-width: 100%; height: auto; object-fit: contain; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>.hidden { display: none; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>button { padding: 10px 20px; margin: 10px; font-size: 1em; cursor: pointer; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>.stats { margin: 10px 0; font-size: 1.1em; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>.stat { margin-right: 20px; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>.flavor-text { margin: 15px 0; font-style: italic; color: #555; }</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/style&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/head&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;body&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;div id="game-container"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;!-- INTRO SCREEN --&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;div id="intro-screen"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;h2&gt;🎬 INTRO: “A Journey Back in Time”&lt;/h2&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;p&gt;The screen flickers. A low hum fills your ears. Suddenly, the room around you begins to shift—walls fading, sounds changing—until everything goes dark. Then…&lt;/p&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;p&gt;Dust. Heat. The smell of wood smoke. You open your eyes and find yourself standing in a small town in the 1840s. People rush past you, shouting, packing wagons, selling everything they own. You overhear one word again and again: “Gold.”&lt;/p&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;p&gt;Someone grabs your arm: “If you’re going, you better decide fast. California won’t wait.” You realize what’s happening. You’ve been sent back in time—to the California Gold Rush.&lt;/p&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;button id="start-btn"&gt;Start Your Journey&lt;/button&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;!-- GAME SCREEN --&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;div id="event-screen" class="hidden"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;h2 id="event-title"&gt;&lt;/h2&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;img id="event-image" src="" alt="Event Image"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;p id="event-text"&gt;&lt;/p&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;div id="choices-container"&gt;&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;div class="flavor-text" id="flavor-text"&gt;&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;div class="stats"&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>&lt;span class="stat"&gt;❤️ Health: &lt;span id="health"&gt;10&lt;/span&gt;&lt;/span&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>&lt;span class="stat"&gt;💰 Gold: &lt;span id="gold"&gt;10&lt;/span&gt;&lt;/span&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>&lt;span class="stat"&gt;🚶 Progress: &lt;span id="progress"&gt;0&lt;/span&gt;&lt;/span&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>&lt;button id="next-btn" class="hidden"&gt;Next&lt;/button&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/div&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;script&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// GAME STATE</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>let currentEvent = 0;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>let health = 10;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>let gold = 10;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>let progress = 0;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// EVENTS ARRAY</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const events = [</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>title: "1. The Letter That Changes Everything",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>text: "It arrives folded, dusty, and urgent. “Gold has been discovered in California…” Within days, your town is buzzing. Shops close. Neighbors vanish overnight. One man sells his farm for almost nothing just to leave faster.",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>image: "images/letter.png",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>choices: [</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text: "Join a wagon train (overland)", flavor:"Lose 2 health, Gain 10 gold, Progress +1", effects:()=&gt;{health-=2; gold+=10; progress+=1;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text: "Sail around South America", flavor:"Lose 1 health, Spend 20 gold, Progress +2", effects:()=&gt;{health-=1; gold-=20; progress+=2;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text: "Cross through Panama", flavor:"Lose 3 health, Spend 10 gold, Progress +2", effects:()=&gt;{health-=3; gold-=10; progress+=2;}}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>]</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>title: "2. Packing for the Unknown",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>text: "You stare at your limited supplies. You can only afford ONE more item. Whatever you choose…you’ll live with.",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>image: "images/packing.png",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>choices: [</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Extra food supplies", flavor:"Health +2 (applies to next health loss)", effects:()=&gt;{health+=2;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"High-quality mining tools", flavor:"Gain 15 gold (first mining success only)", effects:()=&gt;{gold+=15;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"A sturdy wagon upgrade", flavor:"Progress +2 (applies to next travel event)", effects:()=&gt;{progress+=2;}}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>]</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>title: "3. The River Crossing",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>text:"The current is stronger than it looks. Halfway across, your wagon jolts—stuck. Water rushes past, pulling at the wheels. Panic spreads through your group.",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>image:"images/river.png",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>choices:[</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Unload supplies to lighten the wagon", flavor:"Lose 10 gold, Progress +1", effects:()=&gt;{gold-=10; progress+=1;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Force the animals forward", flavor:"50% chance: Lose 2 health OR Progress +2", effects:()=&gt;{if(Math.random()&lt;0.5){health-=2;}else{progress+=2;}}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Secure ropes and try to stabilize the wagon", flavor:"Lose 1 health, Progress +1", effects:()=&gt;{health-=1; progress+=1;}}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>]</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>title:"4. Fever on the Trail",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>text:"It starts with chills…then heat. Your vision blurs. Every step feels heavier. Others keep moving.",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>image:"images/fever.png",</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>choices:[</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Rest and recover", flavor:"Health +2, Progress 0", effects:()=&gt;{health+=2;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Push forward", flavor:"Lose 3 health, Progress +1", effects:()=&gt;{health-=3; progress+=1;}},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>{text:"Buy medicine from a traveling seller", flavor:"Spend 10 gold, Health +3", effects:()=&gt;{gold-=10; health+=3;}}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>]</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>},</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>// --- continue adding all 15 events here similarly ---</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>];</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// DOM ELEMENTS</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const introScreen = document.getElementById('intro-screen');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const startBtn = document.getElementById('start-btn');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const eventScreen = document.getElementById('event-screen');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const eventTitle = document.getElementById('event-title');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const eventText = document.getElementById('event-text');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const eventImage = document.getElementById('event-image');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const choicesContainer = document.getElementById('choices-container');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const flavorText = document.getElementById('flavor-text');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const nextBtn = document.getElementById('next-btn');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const healthSpan = document.getElementById('health');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const goldSpan = document.getElementById('gold');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>const progressSpan = document.getElementById('progress');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// START BUTTON</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>startBtn.addEventListener('click', ()=&gt;{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>introScreen.classList.add('hidden');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventScreen.classList.remove('hidden');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>showEvent();</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>});</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// SHOW EVENT</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>function showEvent(){</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>const event = events[currentEvent];</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventTitle.textContent = event.title;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventText.textContent = event.text;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventImage.src = event.image;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>flavorText.textContent = "";</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>choicesContainer.innerHTML = '';</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>nextBtn.classList.add('hidden');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>event.choices.forEach((choice, idx)=&gt;{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>const btn = document.createElement('button');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>btn.textContent = choice.text;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>btn.addEventListener('click', ()=&gt;{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>choice.effects();</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>flavorText.textContent = choice.flavor;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>updateStats();</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>nextBtn.classList.remove('hidden');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">      </span>choicesContainer.querySelectorAll('button').forEach(b=&gt;b.disabled=true);</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>});</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>choicesContainer.appendChild(btn);</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>});</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>// NEXT EVENT</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>nextBtn.addEventListener('click', ()=&gt;{</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>currentEvent++;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>if(currentEvent&lt;events.length){</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>showEvent();</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>} else {</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">    </span>endGame();</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>});</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>function updateStats(){</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>healthSpan.textContent = health;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>goldSpan.textContent = gold;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>progressSpan.textContent = progress;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000; min-height: 29.0px"><span class="s1"><b></b></span><br></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>function endGame(){</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventTitle.textContent = "🎉 The Journey Ends";</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventText.textContent = "You have reached the end of your adventure. Reflect on your story, choices, and results!";</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>eventImage.style.display = 'none';</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>choicesContainer.innerHTML = '';</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>flavorText.innerHTML = `Final Stats: ❤️ ${health}, 💰 ${gold}, 🚶 ${progress}`;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b><span class="Apple-converted-space">  </span>nextBtn.classList.add('hidden');</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>}</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/script&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/body&gt;</b></span></h1>
-<h1 style="margin: 0.0px 0.0px 16.1px 0.0px; font: 24.0px Times; -webkit-text-stroke: #000000"><span class="s1"><b>&lt;/html&gt;</b></span></h1>
+
+<!-- Intro Screen -->
+<div id="intro-screen">
+  <h2>🎬 INTRO: “A Journey Back in Time”</h2>
+  <p>The screen flickers. A low hum fills your ears. Suddenly, the room around you begins to shift—walls fading, sounds changing—until everything goes dark. Then… Dust. Heat. The smell of wood smoke. You open your eyes and find yourself standing in a small town in the 1840s. People rush past you, shouting, packing wagons, selling everything they own. You overhear one word again and again: “Gold.” Someone grabs your arm: “If you’re going, you better decide fast. California won’t wait.” You realize what’s happening. You’ve been sent back in time—to the California Gold Rush.</p>
+  <button id="start-game" class="choice-button">Start Your Journey</button>
+</div>
+
+<!-- Main Game Screen -->
+<div id="game-screen" style="display: none;">
+  <h2 id="event-title"></h2>
+  <img id="event-image" src="" alt="">
+  <p id="event-text"></p>
+  <div id="choices"></div>
+  <div id="stats">❤️ Health: <span id="health">10</span> | 💰 Gold: <span id="gold">50</span> | 🚶 Progress: <span id="progress">0</span></div>
+  <div id="result"></div>
+</div>
+
+<script>
+// Initial stats
+let health = 10;
+let gold = 50;
+let progress = 0;
+
+// Events array
+const events = [
+  {
+    title: "The Letter That Changes Everything",
+    text: "It arrives folded, dusty, and urgent. “Gold has been discovered in California…” Within days, your town is buzzing...",
+    image: "images/letter.jpg",
+    choices: [
+      { text: "Join a wagon train (overland)", effects: { health: -2, gold: 10, progress: 1 }, flavor: "The slow journey leaves you exhausted. Lose 2 health, gain 10 gold, progress +1." },
+      { text: "Sail around South America", effects: { health: -1, gold: -20, progress: 2 }, flavor: "The voyage is long and rough. Lose 1 health, spend 20 gold, progress +2." },
+      { text: "Cross through Panama", effects: { health: -3, gold: -10, progress: 2 }, flavor: "The jungle is deadly. Lose 3 health, spend 10 gold, progress +2." }
+    ]
+  },
+  {
+    title: "Packing for the Unknown",
+    text: "You stare at your limited supplies. You can only afford ONE more item.",
+    image: "images/packing.jpg",
+    choices: [
+      { text: "Extra food supplies", effects: { health: 2 }, flavor: "You’ll have more energy for the journey. Gain 2 health on the next health loss." },
+      { text: "High-quality mining tools", effects: { gold: 15 }, flavor: "Better tools could earn more gold once you reach the fields. Gain 15 gold on your first mining success." },
+      { text: "A sturdy wagon upgrade", effects: { progress: 2 }, flavor: "Stronger wheels help you move faster. Gain +2 progress on your next travel event." }
+    ]
+  },
+  {
+    title: "The River Crossing",
+    text: "The current is stronger than it looks. Halfway across, your wagon jolts—stuck.",
+    image: "images/river.jpg",
+    choices: [
+      { text: "Unload supplies to lighten the wagon", effects: { gold: -10, progress: 1 }, flavor: "You lose 10 gold, but progress +1." },
+      { text: "Force the animals forward", effects: { health: -2, progress: 2, chance: true }, flavor: "50% chance to lose 2 health or gain +2 progress." },
+      { text: "Secure ropes and try to stabilize the wagon", effects: { health: -1, progress: 1 }, flavor: "You lose 1 health, progress +1." }
+    ]
+  }
+  // Add remaining 12 events in the same structure
+];
+
+// DOM elements
+const introScreen = document.getElementById('intro-screen');
+const gameScreen = document.getElementById('game-screen');
+const eventTitle = document.getElementById('event-title');
+const eventImage = document.getElementById('event-image');
+const eventText = document.getElementById('event-text');
+const choicesDiv = document.getElementById('choices');
+const healthSpan = document.getElementById('health');
+const goldSpan = document.getElementById('gold');
+const progressSpan = document.getElementById('progress');
+const resultDiv = document.getElementById('result');
+
+let currentEvent = 0;
+
+// Start button
+document.getElementById('start-game').addEventListener('click', () => {
+  introScreen.style.display = 'none';
+  gameScreen.style.display = 'block';
+  showEvent(currentEvent);
+});
+
+// Show event
+function showEvent(index) {
+  const event = events[index];
+  eventTitle.textContent = event.title;
+  eventImage.src = event.image;
+  eventText.textContent = event.text;
+  choicesDiv.innerHTML = '';
+  resultDiv.textContent = '';
+  
+  event.choices.forEach((choice, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = choice.text;
+    btn.className = 'choice-button';
+    btn.addEventListener('click', () => selectChoice(i));
+    choicesDiv.appendChild(btn);
+  });
+}
+
+// Handle choice
+function selectChoice(choiceIndex) {
+  const event = events[currentEvent];
+  const choice = event.choices[choiceIndex];
+  
+  if (choice.effects.health) health += choice.effects.health;
+  if (choice.effects.gold) gold += choice.effects.gold;
+  if (choice.effects.progress) progress += choice.effects.progress;
+  
+  healthSpan.textContent = health;
+  goldSpan.textContent = gold;
+  progressSpan.textContent = progress;
+  
+  resultDiv.textContent = choice.flavor;
+  
+  currentEvent++;
+  if(currentEvent < events.length) {
+    setTimeout(() => showEvent(currentEvent), 2000);
+  } else {
+    setTimeout(() => endGame(), 2000);
+  }
+}
+
+function endGame() {
+  eventTitle.textContent = "The Journey Ends";
+  eventText.textContent = "You’ve completed your Gold Rush adventure! Reflect on your choices and what you’ve learned.";
+  eventImage.style.display = 'none';
+  choicesDiv.innerHTML = '';
+  resultDiv.innerHTML = '';
+}
+</script>
+
 </body>
 </html>
