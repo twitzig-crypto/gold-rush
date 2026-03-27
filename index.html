@@ -3,175 +3,250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gold Rush Escape Room</title>
+<title>Gold Rush Adventure</title>
 <style>
   body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fdf6e3;
+    font-family: 'Georgia', serif;
+    background-color: #fef7e0;
     color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  #intro-screen, #game-screen {
     max-width: 800px;
+    margin: auto;
     padding: 20px;
+  }
+  #game-container {
     text-align: center;
   }
-  img {
+  #event-image {
     max-width: 100%;
     height: auto;
+    object-fit: contain;
     margin-bottom: 20px;
   }
-  .choice-button {
+  .choice-btn {
     display: block;
     margin: 10px auto;
     padding: 10px 20px;
-    font-size: 16px;
+    background-color: #ffd700;
+    border: 2px solid #aa8800;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+  }
+  .choice-btn:hover {
+    background-color: #ffe680;
   }
   #stats {
-    margin: 10px 0;
-    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
   }
-  #result {
+  #result-text {
     margin-top: 20px;
-    min-height: 50px;
+    font-style: italic;
   }
 </style>
 </head>
 <body>
-
-<!-- Intro Screen -->
-<div id="intro-screen">
-  <h2>🎬 INTRO: “A Journey Back in Time”</h2>
+<div id="game-container">
+  <h1>🎬 INTRO: A Journey Back in Time</h1>
+  <img id="event-image" src="images/intro.png" alt="Intro Scene">
   <p>The screen flickers. A low hum fills your ears. Suddenly, the room around you begins to shift—walls fading, sounds changing—until everything goes dark. Then… Dust. Heat. The smell of wood smoke. You open your eyes and find yourself standing in a small town in the 1840s. People rush past you, shouting, packing wagons, selling everything they own. You overhear one word again and again: “Gold.” Someone grabs your arm: “If you’re going, you better decide fast. California won’t wait.” You realize what’s happening. You’ve been sent back in time—to the California Gold Rush.</p>
-  <button id="start-game" class="choice-button">Start Your Journey</button>
+  <button class="choice-btn" onclick="nextEvent()">Start Your Journey</button>
 </div>
 
-<!-- Main Game Screen -->
-<div id="game-screen" style="display: none;">
-  <h2 id="event-title"></h2>
-  <img id="event-image" src="" alt="">
-  <p id="event-text"></p>
-  <div id="choices"></div>
-  <div id="stats">❤️ Health: <span id="health">10</span> | 💰 Gold: <span id="gold">50</span> | 🚶 Progress: <span id="progress">0</span></div>
-  <div id="result"></div>
+<div id="stats">
+  💖 Health: <span id="health">10</span> | 💰 Gold: <span id="gold">10</span> | 🚶 Progress: <span id="progress">0</span>
 </div>
+<div id="result-text"></div>
 
 <script>
-// Initial stats
+let currentEvent = 0;
 let health = 10;
-let gold = 50;
+let gold = 10;
 let progress = 0;
 
-// Events array
 const events = [
   {
-    title: "The Letter That Changes Everything",
-    text: "It arrives folded, dusty, and urgent. “Gold has been discovered in California…” Within days, your town is buzzing...",
-    image: "images/letter.jpg",
+    title: "1. The Letter That Changes Everything",
+    image: "images/event1.png",
+    text: "A letter arrives folded, dusty, and urgent. Gold has been discovered in California… Shops close. Neighbors vanish. Your chance is now!",
     choices: [
-      { text: "Join a wagon train (overland)", effects: { health: -2, gold: 10, progress: 1 }, flavor: "The slow journey leaves you exhausted. Lose 2 health, gain 10 gold, progress +1." },
-      { text: "Sail around South America", effects: { health: -1, gold: -20, progress: 2 }, flavor: "The voyage is long and rough. Lose 1 health, spend 20 gold, progress +2." },
-      { text: "Cross through Panama", effects: { health: -3, gold: -10, progress: 2 }, flavor: "The jungle is deadly. Lose 3 health, spend 10 gold, progress +2." }
+      { text: "Join a wagon train (overland)", result: "You share supplies and push through rough terrain. Lose 2 health, gain 10 gold, progress +1.", health:-2, gold:10, progress:1 },
+      { text: "Sail around South America", result: "The long sea voyage is harsh but you avoid land dangers. Lose 1 health, spend 20 gold, progress +2.", health:-1, gold:-20, progress:2 },
+      { text: "Cross through Panama", result: "Jungles and disease threaten your journey. Lose 3 health, spend 10 gold, progress +2.", health:-3, gold:-10, progress:2 }
     ]
   },
   {
-    title: "Packing for the Unknown",
-    text: "You stare at your limited supplies. You can only afford ONE more item.",
-    image: "images/packing.jpg",
+    title: "2. Packing for the Unknown",
+    image: "images/event2.png",
+    text: "You can only afford ONE critical item. Choose wisely.",
     choices: [
-      { text: "Extra food supplies", effects: { health: 2 }, flavor: "You’ll have more energy for the journey. Gain 2 health on the next health loss." },
-      { text: "High-quality mining tools", effects: { gold: 15 }, flavor: "Better tools could earn more gold once you reach the fields. Gain 15 gold on your first mining success." },
-      { text: "A sturdy wagon upgrade", effects: { progress: 2 }, flavor: "Stronger wheels help you move faster. Gain +2 progress on your next travel event." }
+      { text: "Extra food supplies", result: "More food gives you better energy. Health +2 (applies to next health loss).", health:2, gold:0, progress:0 },
+      { text: "High-quality mining tools", result: "Better tools could earn more gold later. Gold +15 (first mining success only).", health:0, gold:15, progress:0 },
+      { text: "A sturdy wagon upgrade", result: "Stronger wheels help you move faster. Progress +2 (applies to next travel event).", health:0, gold:0, progress:2 }
     ]
   },
   {
-    title: "The River Crossing",
-    text: "The current is stronger than it looks. Halfway across, your wagon jolts—stuck.",
-    image: "images/river.jpg",
+    title: "3. The River Crossing",
+    image: "images/event3.png",
+    text: "The current is strong. Halfway across, your wagon jolts—stuck! Water rushes past. Panic spreads.",
     choices: [
-      { text: "Unload supplies to lighten the wagon", effects: { gold: -10, progress: 1 }, flavor: "You lose 10 gold, but progress +1." },
-      { text: "Force the animals forward", effects: { health: -2, progress: 2, chance: true }, flavor: "50% chance to lose 2 health or gain +2 progress." },
-      { text: "Secure ropes and try to stabilize the wagon", effects: { health: -1, progress: 1 }, flavor: "You lose 1 health, progress +1." }
+      { text: "Unload supplies to lighten the wagon", result: "You sacrifice some supplies to get moving. Lose 10 gold, progress +1.", health:0, gold:-10, progress:1 },
+      { text: "Force the animals forward", result: "The animals strain! 50% chance: lose 2 health OR gain 2 progress.", health:-2, gold:0, progress:2 },
+      { text: "Secure ropes and stabilize wagon", result: "Careful stabilization avoids disaster. Lose 1 health, progress +1.", health:-1, gold:0, progress:1 }
+    ]
+  },
+  {
+    title: "4. Fever on the Trail",
+    image: "images/event4.png",
+    text: "Chills and heat overtake you. Every step feels heavier.",
+    choices: [
+      { text: "Rest and recover", result: "You take time to recover. Health +2, no progress gained.", health:2, gold:0, progress:0 },
+      { text: "Push forward", result: "You strain your body. Lose 3 health, progress +1.", health:-3, gold:0, progress:1 },
+      { text: "Buy medicine from a traveling seller", result: "Medicine helps! Spend 10 gold, gain 3 health.", health:3, gold:-10, progress:0 }
+    ]
+  },
+  {
+    title: "5. First Glimpse of the Gold Fields",
+    image: "images/event5.png",
+    text: "Tents, mud, shouting. Chaos reigns. What is your first move?",
+    choices: [
+      { text: "Rush to claim land immediately", result: "You hurry but the land is unpredictable. Gain 20 gold OR 0.", health:0, gold:20, progress:0 },
+      { text: "Gather information from locals", result: "Locals share useful info. Progress +1, gain 10 gold.", health:0, gold:10, progress:1 },
+      { text: "Join an experienced group", result: "You follow seasoned miners. Gain 8 gold.", health:0, gold:8, progress:0 }
+    ]
+  },
+  {
+    title: "6. Learning to Pan for Gold",
+    image: "images/event6.png",
+    text: "You crouch beside the river, swirling muddy water in a shallow pan.",
+    choices: [
+      { text: "Assume it’s gold and stop working", result: "You pause and wait. No gain.", health:0, gold:0, progress:0 },
+      { text: "Carefully test and keep working", result: "Patience pays off! Gain 10 gold.", health:0, gold:10, progress:0 },
+      { text: "Sell your findings quickly", result: "Quick sale nets 10 gold now but you could lose future gains. Gold +10 (future -10).", health:0, gold:10, progress:0 }
+    ]
+  },
+  {
+    title: "7. The Cost of Eating",
+    image: "images/event7.png",
+    text: "Days pass. Meals are meager. You smell better food in town.",
+    choices: [
+      { text: "Eat basic rations", result: "You stick with simple meals. No effect.", health:0, gold:0, progress:0 },
+      { text: "Buy better meals", result: "Nutrition helps! Spend 10 gold, gain 2 health.", health:2, gold:-10, progress:0 },
+      { text: "Eat less to save money", result: "You save money but feel weak. Gain 5 gold, lose 3 health.", health:-3, gold:5, progress:0 }
+    ]
+  },
+  {
+    title: "8. Danger in the Dig Site 🐍",
+    image: "images/event8.png",
+    text: "While digging, a snake strikes! What do you do?",
+    choices: [
+      { text: "Fight it with your tools", result: "You fight off the snake. Lose 1 health, progress +1.", health:-1, gold:0, progress:1 },
+      { text: "Retreat and return later", result: "You avoid danger but might lose supplies. Lose 10 gold OR 0.", health:0, gold:-10, progress:0 },
+      { text: "Carefully scare it away", result: "Snake moves aside safely. Gain 10 gold OR lose 3 health.", health:-3, gold:10, progress:0 }
+    ]
+  },
+  {
+    title: "9. The Suspicious Offer",
+    image: "images/event9.png",
+    text: "A tired miner offers a rich claim. But can you trust it?",
+    choices: [
+      { text: "Buy the claim immediately", result: "You spend 20 gold. Might be good or bad. Lose 20 gold.", health:0, gold:-20, progress:0 },
+      { text: "Investigate and test the soil", result: "You carefully test the land. Progress +1, avoid loss.", health:0, gold:0, progress:1 },
+      { text: "Walk away and keep working", result: "You continue mining safely. Gain 8 gold.", health:0, gold:8, progress:0 }
+    ]
+  },
+  {
+    title: "10. The Storm",
+    image: "images/event10.png",
+    text: "Rain crashes down. Your claim floods. Tools are at risk.",
+    choices: [
+      { text: "Rebuild here", result: "You rebuild but strain yourself. Lose 1 health, no progress.", health:-1, gold:0, progress:0 },
+      { text: "Move to a new claim", result: "You relocate. Lose 5 gold, progress +2.", health:0, gold:-5, progress:2 },
+      { text: "Work temporary jobs in town", result: "You earn gold through odd jobs. Gain 10 gold.", health:0, gold:10, progress:0 }
+    ]
+  },
+  {
+    title: "11. The Claim Dispute",
+    image: "images/event11.png",
+    text: "Another miner stands on your land. No law here. Decide quickly!",
+    choices: [
+      { text: "Fight for your claim", result: "Conflict! Lose 3 health, keep gold.", health:-3, gold:0, progress:0 },
+      { text: "Negotiate to share", result: "You agree to share. Future gains split.", health:0, gold:0, progress:0 },
+      { text: "Leave", result: "You walk away. Lose 5 gold, progress +1.", health:0, gold:-5, progress:1 }
+    ]
+  },
+  {
+    title: "12. A New Opportunity",
+    image: "images/event12.png",
+    text: "Miners spend constantly. Could you start a business?",
+    choices: [
+      { text: "Open a business", result: "Steady income! Gain 15 gold.", health:0, gold:15, progress:0 },
+      { text: "Keep mining", result: "You continue digging. Gain 0-25 gold.", health:0, gold:0, progress:0 },
+      { text: "Partner with someone", result: "Partnering is risky. Gain 10 gold OR lose 5.", health:0, gold:10, progress:0 }
+    ]
+  },
+  {
+    title: "13. The Rumor Spreads",
+    image: "images/event13.png",
+    text: "A massive gold strike nearby. Rush or stay?",
+    choices: [
+      { text: "Rush to the new site", result: "You move quickly. Gain 25 gold OR lose 2 health.", health:-2, gold:25, progress:0 },
+      { text: "Stay where you are", result: "You stay safe but gain 10 gold.", health:0, gold:10, progress:0 },
+      { text: "Pay a scout to investigate", result: "Scout helps. Spend 5 gold, safer result.", health:0, gold:-5, progress:0 }
+    ]
+  },
+  {
+    title: "14. The Breaking Point",
+    image: "images/event14.png",
+    text: "Weeks of labor. Your hands shake. Body aches.",
+    choices: [
+      { text: "Rest and recover", result: "You take a break. Gain 3 health, no progress.", health:3, gold:0, progress:0 },
+      { text: "Push through", result: "You strain yourself. Gain 10 gold, lose 2 health.", health:-2, gold:10, progress:0 },
+      { text: "Hire help", result: "Extra hands help. Spend 10 gold, gain 1 health.", health:1, gold:-10, progress:0 }
+    ]
+  },
+  {
+    title: "15. Final Reflection: Your Story",
+    image: "images/event15.png",
+    text: "Look back on your journey. Some struck gold, many didn’t. Decide your future!",
+    choices: [
+      { text: "Continue chasing gold", result: "You pursue the dream further!", health:0, gold:0, progress:0 },
+      { text: "Return home", result: "You head back, carrying lessons and memories.", health:0, gold:0, progress:0 },
+      { text: "Stay in California and build a life", result: "You settle and build a new life.", health:0, gold:0, progress:0 }
     ]
   }
-  // Add remaining 12 events in the same structure
 ];
 
-// DOM elements
-const introScreen = document.getElementById('intro-screen');
-const gameScreen = document.getElementById('game-screen');
-const eventTitle = document.getElementById('event-title');
-const eventImage = document.getElementById('event-image');
-const eventText = document.getElementById('event-text');
-const choicesDiv = document.getElementById('choices');
-const healthSpan = document.getElementById('health');
-const goldSpan = document.getElementById('gold');
-const progressSpan = document.getElementById('progress');
-const resultDiv = document.getElementById('result');
+function nextEvent(choiceIndex=null) {
+  const container = document.getElementById('game-container');
+  const resultText = document.getElementById('result-text');
 
-let currentEvent = 0;
-
-// Start button
-document.getElementById('start-game').addEventListener('click', () => {
-  introScreen.style.display = 'none';
-  gameScreen.style.display = 'block';
-  showEvent(currentEvent);
-});
-
-// Show event
-function showEvent(index) {
-  const event = events[index];
-  eventTitle.textContent = event.title;
-  eventImage.src = event.image;
-  eventText.textContent = event.text;
-  choicesDiv.innerHTML = '';
-  resultDiv.textContent = '';
-  
-  event.choices.forEach((choice, i) => {
-    const btn = document.createElement('button');
-    btn.textContent = choice.text;
-    btn.className = 'choice-button';
-    btn.addEventListener('click', () => selectChoice(i));
-    choicesDiv.appendChild(btn);
-  });
-}
-
-// Handle choice
-function selectChoice(choiceIndex) {
-  const event = events[currentEvent];
-  const choice = event.choices[choiceIndex];
-  
-  if (choice.effects.health) health += choice.effects.health;
-  if (choice.effects.gold) gold += choice.effects.gold;
-  if (choice.effects.progress) progress += choice.effects.progress;
-  
-  healthSpan.textContent = health;
-  goldSpan.textContent = gold;
-  progressSpan.textContent = progress;
-  
-  resultDiv.textContent = choice.flavor;
-  
-  currentEvent++;
-  if(currentEvent < events.length) {
-    setTimeout(() => showEvent(currentEvent), 2000);
-  } else {
-    setTimeout(() => endGame(), 2000);
+  if (choiceIndex !== null) {
+    const choice = events[currentEvent].choices[choiceIndex];
+    health += choice.health;
+    gold += choice.gold;
+    progress += choice.progress;
+    resultText.innerHTML = choice.result;
+    document.getElementById('health').textContent = health;
+    document.getElementById('gold').textContent = gold;
+    document.getElementById('progress').textContent = progress;
   }
-}
 
-function endGame() {
-  eventTitle.textContent = "The Journey Ends";
-  eventText.textContent = "You’ve completed your Gold Rush adventure! Reflect on your choices and what you’ve learned.";
-  eventImage.style.display = 'none';
-  choicesDiv.innerHTML = '';
-  resultDiv.innerHTML = '';
+  if (currentEvent >= events.length) {
+    container.innerHTML = "<h2>🎉 Journey Complete!</h2><p>Thanks for playing!</p>";
+    return;
+  }
+
+  const event = events[currentEvent];
+  container.innerHTML = `
+    <h2>${event.title}</h2>
+    <img id="event-image" src="${event.image}" alt="${event.title}">
+    <p>${event.text}</p>
+    ${event.choices.map((c,i)=>`<button class="choice-btn" onclick="nextEvent(${i})">${c.text}</button>`).join('')}
+  `;
+
+  currentEvent++;
 }
 </script>
-
 </body>
 </html>
