@@ -3,69 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gold Rush Escape Room</title>
+<title>Gold Rush Adventure</title>
 <style>
   body {
-    font-family: 'Trebuchet MS', sans-serif;
-    background-color: #f2e6d9;
+    font-family: "Georgia", serif;
+    background-color: #f5e8d0;
     color: #333;
     text-align: center;
-    margin: 0;
-    padding: 0;
-  }
-  #main {
-    max-width: 800px;
-    margin: auto;
     padding: 20px;
   }
-  img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-  button {
-    margin: 10px;
-    padding: 12px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background-color: #d6a75e;
-    color: white;
-  }
   #stats {
-    margin: 15px 0;
     font-size: 18px;
+    margin-bottom: 10px;
+  }
+  #scenarioImage {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+  .choice-btn {
+    background-color: #d6a95c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .choice-btn:hover {
+    background-color: #c28f48;
   }
   #feedbackText {
-    margin-top: 20px;
     font-style: italic;
+    margin-top: 10px;
   }
 </style>
 </head>
 <body>
-<div id="main">
-  <div id="scenarioText"></div>
-  <img id="scenarioImage" src="" alt="">
-  <div id="stats"></div>
-  <button id="choiceA"></button>
-  <button id="choiceB"></button>
-  <button id="choiceC"></button>
-  <div id="feedbackText"></div>
-</div>
+
+<div id="stats">Health: 10 ❤️ | Gold: 0 🪙 | Progress: 0%</div>
+<img id="scenarioImage" src="" alt="Event Image">
+<div id="scenarioText"></div>
+<br>
+<button id="choiceA" class="choice-btn"></button>
+<button id="choiceB" class="choice-btn"></button>
+<button id="choiceC" class="choice-btn"></button>
+<div id="feedbackText"></div>
 
 <script>
 let health = 10;
 let gold = 0;
 let progress = 0;
-let currentEvent = -1;
+let currentEvent = 0;
 
-// All 15 events with flavor text, image, choices, and results
 const events = [
+  // Intro
   {
     text: `🎬 INTRO: “A Journey Back in Time”
-The screen flickers.
-A low hum fills your ears.
+The screen flickers. A low hum fills your ears.
 Suddenly, the room around you begins to shift—walls fading, sounds changing—until everything goes dark.
 Then…
 Dust. Heat. The smell of wood smoke.
@@ -77,194 +75,199 @@ You realize what’s happening.
 You’ve been sent back in time—to the California Gold Rush.`,
     image: "images/intro.png",
     choices: [
-      { text: "Start Journey", result: "Your adventure begins! Keep your health high and eyes sharp.", health:0, gold:0, progress:0 }
+      { text: "Start Journey", health: 0, gold: 0, progress: 1, feedback: "You take a deep breath and step forward, ready to chase your fortune in California." }
     ]
   },
+  // Event 1
   {
-    text: "1. The Letter That Changes Everything\nWithin days, your town is buzzing. Shops close. Neighbors vanish overnight. One man sells his farm for almost nothing just to leave faster.\nThis is your chance. But the journey will shape everything that comes after.\nHow will you travel?",
+    text: "You encounter a prospector frantically digging. He looks at you with desperation.",
     image: "images/event1.png",
     choices: [
-      { text: "Join a wagon train (overland)", result: "You travel slowly across rough terrain. Lose 2 health, gain 10 gold, gain 1 progress.", health:-2, gold:10, progress:1 },
-      { text: "Sail around South America", result: "Long voyage, expensive, mild risk. Lose 1 health, spend 20 gold, gain 2 progress.", health:-1, gold:-20, progress:2 },
-      { text: "Cross through Panama", result: "Deadly jungles and disease. Lose 3 health, spend 10 gold, gain 2 progress.", health:-3, gold:-10, progress:2 }
+      { text: "Help him dig", health: -1, gold: 2, progress: 7, feedback: "You dig alongside him. Dust gets in your eyes and you feel a small scrape. Lose 1 health, gain 2 gold." },
+      { text: "Move on", health: 0, gold: 0, progress: 7, feedback: "You decide not to get involved. Nothing gained, nothing lost." }
     ]
   },
+  // Event 2
   {
-    text: "2. Packing for the Unknown\nYou stare at your limited supplies. You can only afford ONE more item. Whatever you choose…you’ll live with.",
+    text: "A merchant offers supplies for your journey.",
     image: "images/event2.png",
     choices: [
-      { text: "Extra food supplies", result: "Better energy and recovery on your journey. Gain 2 health for next health loss.", health:2, gold:0, progress:0 },
-      { text: "High-quality mining tools", result: "Better tools could help you earn more gold later. Gain 15 gold at first mining success.", health:0, gold:15, progress:0 },
-      { text: "A sturdy wagon upgrade", result: "Stronger wheels help you move faster. Gain 2 progress on next travel event.", health:0, gold:0, progress:2 }
+      { text: "Buy supplies", health: 0, gold: -2, progress: 13, feedback: "You stock up on essentials. Spend 2 gold, better prepared for the adventure ahead." },
+      { text: "Decline", health: 0, gold: 0, progress: 13, feedback: "You keep your gold but risk running short later." }
     ]
   },
+  // Event 3
   {
-    text: "3. The River Crossing\nThe current is stronger than it looks. Supplies shift. Panic spreads through your group. What do you do?",
+    text: "You find a small stream shimmering in the sunlight.",
     image: "images/event3.png",
     choices: [
-      { text: "Unload supplies", result: "You lighten the wagon. Lose 10 gold, gain 1 progress.", health:0, gold:-10, progress:1 },
-      { text: "Force the animals forward", result: "50% chance: Lose 2 health OR gain 2 progress.", health:-2, gold:0, progress:2 },
-      { text: "Secure ropes", result: "Lose 1 health, gain 1 progress.", health:-1, gold:0, progress:1 }
+      { text: "Pan for gold", health: -1, gold: 3, progress: 20, feedback: "You try your luck in the stream. Wet and scratched, you lose 1 health but gain 3 gold." },
+      { text: "Drink water and rest", health: 1, gold: 0, progress: 20, feedback: "You refill your canteen and rest briefly. Gain 1 health." }
     ]
   },
+  // Event 4
   {
-    text: "4. Fever on the Trail\nIt starts with chills…then heat. Your vision blurs. What do you do?",
+    text: "A group of bandits appears ahead on the trail.",
     image: "images/event4.png",
     choices: [
-      { text: "Rest and recover", result: "You regain some strength. Gain 2 health.", health:2, gold:0, progress:0 },
-      { text: "Push forward", result: "You push on despite illness. Lose 3 health, gain 1 progress.", health:-3, gold:0, progress:1 },
-      { text: "Buy medicine", result: "Medicine helps recovery. Spend 10 gold, gain 3 health.", health:3, gold:-10, progress:0 }
+      { text: "Fight them", health: -2, gold: 5, progress: 27, feedback: "You confront the bandits. Injured but victorious! Lose 2 health, gain 5 gold." },
+      { text: "Run away", health: 0, gold: 0, progress: 27, feedback: "You escape safely but lose an opportunity for gold." }
     ]
   },
+  // Event 5
   {
-    text: "5. First Glimpse of the Gold Fields\nAfter months of travel, you arrive in a chaotic California boomtown. What’s your first move?",
+    text: "You come across an abandoned cabin.",
     image: "images/event5.png",
     choices: [
-      { text: "Rush to claim land", result: "You might strike gold immediately! Gain 20 gold or none.", health:0, gold:20, progress:0 },
-      { text: "Gather information", result: "Gain insight for safer decisions. Gain 10 gold, 1 progress.", health:0, gold:10, progress:1 },
-      { text: "Join an experienced group", result: "Benefit from others’ expertise. Gain 8 gold.", health:0, gold:8, progress:0 }
+      { text: "Search inside", health: -1, gold: 2, progress: 33, feedback: "A loose floorboard scratches you, but you find some gold. Lose 1 health, gain 2 gold." },
+      { text: "Ignore it", health: 0, gold: 0, progress: 33, feedback: "You pass by without incident." }
     ]
   },
+  // Event 6
   {
-    text: "6. Learning to Pan for Gold\nYou crouch beside a cold river, swirling muddy water. Suddenly…something glints. What do you do?",
+    text: "Suddenly, a storm rolls in over the hills.",
     image: "images/event6.png",
     choices: [
-      { text: "Assume it’s gold and stop", result: "Too soon! Gain nothing.", health:0, gold:0, progress:0 },
-      { text: "Carefully test and keep working", result: "Patience pays! Gain 10 gold.", health:0, gold:10, progress:0 },
-      { text: "Sell your findings quickly", result: "Quick sale gains 10 gold now, may lose future opportunities.", health:0, gold:10, progress:0 }
+      { text: "Find shelter", health: 1, gold: 0, progress: 40, feedback: "You stay dry and safe. Gain 1 health." },
+      { text: "Push through the rain", health: -2, gold: 1, progress: 40, feedback: "You get soaked and catch a chill. Lose 2 health, gain 1 gold." }
     ]
   },
+  // Event 7
   {
-    text: "7. The Cost of Eating\nDays pass. Meals are basic. You smell better food in town. What do you do?",
+    text: "A rival prospector challenges you to a gold-panning contest.",
     image: "images/event7.png",
     choices: [
-      { text: "Eat basic rations", result: "Nothing changes.", health:0, gold:0, progress:0 },
-      { text: "Buy better meals", result: "Better nutrition restores health. Spend 10 gold, gain 2 health.", health:2, gold:-10, progress:0 },
-      { text: "Eat less to save money", result: "You save money but lose some strength. Gain 5 gold, lose 3 health.", health:-3, gold:5, progress:0 }
+      { text: "Compete", health: -1, gold: 4, progress: 47, feedback: "Intense work! You gain some gold but hurt yourself. Lose 1 health, gain 4 gold." },
+      { text: "Decline", health: 0, gold: 0, progress: 47, feedback: "You avoid the contest and stay safe." }
     ]
   },
+  // Event 8
   {
-    text: "8. Danger in the Dig Site 🐍\nA snake strikes! What do you do?",
+    text: "You find a mysterious map fluttering on the ground.",
     image: "images/event8.png",
     choices: [
-      { text: "Fight it", result: "You lose 1 health, gain 1 progress.", health:-1, gold:0, progress:1 },
-      { text: "Retreat later", result: "Risk theft. Lose 10 gold or nothing.", health:0, gold:-10, progress:0 },
-      { text: "Scare it away", result: "Successfully scares snake. Gain 10 gold or lose 3 health.", health:-3, gold:10, progress:0 }
+      { text: "Follow the map", health: 0, gold: 3, progress: 53, feedback: "The map leads you to hidden nuggets! Gain 3 gold." },
+      { text: "Ignore it", health: 0, gold: 0, progress: 53, feedback: "You walk past, nothing happens." }
     ]
   },
+  // Event 9
   {
-    text: "9. The Suspicious Offer\nA tired miner approaches you. What do you do?",
+    text: "A wild animal blocks your path.",
     image: "images/event9.png",
     choices: [
-      { text: "Buy claim immediately", result: "Expensive gamble. Spend 20 gold.", health:0, gold:-20, progress:0 },
-      { text: "Investigate and test", result: "Better safe than sorry. Gain 1 progress.", health:0, gold:0, progress:1 },
-      { text: "Walk away", result: "Safe choice. Gain 8 gold.", health:0, gold:8, progress:0 }
+      { text: "Try to scare it", health: -1, gold: 0, progress: 60, feedback: "It scratches you but runs off. Lose 1 health." },
+      { text: "Go around", health: 0, gold: 0, progress: 60, feedback: "You carefully detour around the animal." }
     ]
   },
+  // Event 10
   {
-    text: "10. The Storm\nRain crashes down. Everything is at risk. What now?",
+    text: "You reach a small mining town.",
     image: "images/event10.png",
     choices: [
-      { text: "Rebuild here", result: "Effort restores little. Lose 1 health.", health:-1, gold:0, progress:0 },
-      { text: "Move to new claim", result: "Better spot. Lose 5 gold, gain 2 progress.", health:0, gold:-5, progress:2 },
-      { text: "Work temporary jobs", result: "Earn extra gold. Gain 10 gold.", health:0, gold:10, progress:0 }
+      { text: "Trade with locals", health: 0, gold: -1, progress: 67, feedback: "You spend some gold for better supplies. Lose 1 gold." },
+      { text: "Keep moving", health: 0, gold: 0, progress: 67, feedback: "You march onward, saving your gold." }
     ]
   },
+  // Event 11
   {
-    text: "11. The Claim Dispute\nAnother miner stands on your land. What do you do?",
+    text: "You hear about a hidden vein of gold in the hills.",
     image: "images/event11.png",
     choices: [
-      { text: "Fight for claim", result: "Conflict! Lose 3 health, keep gold.", health:-3, gold:0, progress:0 },
-      { text: "Negotiate to share", result: "Split future gains.", health:0, gold:0, progress:0 },
-      { text: "Leave", result: "Walk away. Lose 5 gold, gain 1 progress.", health:0, gold:-5, progress:1 }
+      { text: "Investigate", health: -1, gold: 5, progress: 73, feedback: "You climb the hill and find gold. Lose 1 health, gain 5 gold." },
+      { text: "Ignore the rumor", health: 0, gold: 0, progress: 73, feedback: "Better safe than sorry." }
     ]
   },
+  // Event 12
   {
-    text: "12. A New Opportunity\nSome miners aren’t mining yet getting rich. What do you do?",
+    text: "A prospector offers to share secrets if you share some gold.",
     image: "images/event12.png",
     choices: [
-      { text: "Open a business", result: "Steady income. Gain 15 gold.", health:0, gold:15, progress:0 },
-      { text: "Keep mining", result: "Variable results. Gain 0–25 gold.", health:0, gold:0, progress:0 },
-      { text: "Partner with someone", result: "Some risk, some gain. Gain 10 gold or lose 5.", health:0, gold:10, progress:0 }
+      { text: "Share gold", health: 0, gold: -2, progress: 80, feedback: "You spend 2 gold but gain valuable info for later." },
+      { text: "Refuse", health: 0, gold: 0, progress: 80, feedback: "You keep your gold but miss out on advice." }
     ]
   },
+  // Event 13
   {
-    text: "13. The Rumor Spreads\nWhispers of a massive gold strike nearby. What do you do?",
+    text: "You come across a dangerous cliffside path.",
     image: "images/event13.png",
     choices: [
-      { text: "Rush to new site", result: "Gain 25 gold or lose 2 health.", health:-2, gold:25, progress:0 },
-      { text: "Stay", result: "Steady work. Gain 10 gold.", health:0, gold:10, progress:0 },
-      { text: "Pay a scout", result: "Safer exploration. Spend 5 gold.", health:0, gold:-5, progress:0 }
+      { text: "Carefully traverse", health: -1, gold: 0, progress: 87, feedback: "You make it safely but scrape your arm. Lose 1 health." },
+      { text: "Find another route", health: 0, gold: 0, progress: 87, feedback: "It takes longer but you stay safe." }
     ]
   },
+  // Event 14
   {
-    text: "14. The Breaking Point\nWeeks of labor. Hands shake. Body aches. What do you do?",
+    text: "A miner offers to sell you a secret claim.",
     image: "images/event14.png",
     choices: [
-      { text: "Rest and recover", result: "Health improves. Gain 3 health.", health:3, gold:0, progress:0 },
-      { text: "Push through", result: "Push your limits. Lose 2 health, gain 10 gold.", health:-2, gold:10, progress:0 },
-      { text: "Hire help", result: "Extra assistance costs gold. Lose 10 gold, gain 1 health.", health:1, gold:-10, progress:0 }
+      { text: "Buy claim", health: 0, gold: -3, progress: 93, feedback: "You spend 3 gold on a hidden spot." },
+      { text: "Decline", health: 0, gold: 0, progress: 93, feedback: "You pass on the offer." }
     ]
   },
+  // Event 15
   {
-    text: "15. Final Reflection: Your Story\nYou look back on your journey. Some struck gold, many didn’t. What will you do?",
+    text: "You reach the end of your Gold Rush journey.",
     image: "images/event15.png",
     choices: [
-      { text: "Continue chasing gold", result: "Your adventure continues…", health:0, gold:0, progress:0 },
-      { text: "Return home", result: "You go home richer in experience.", health:0, gold:0, progress:0 },
-      { text: "Stay and build a life", result: "You settle in California, building a new life.", health:0, gold:0, progress:0 }
+      { text: "See final results", health: 0, gold: 0, progress: 100, feedback: "Congratulations! You survived the Gold Rush adventure." }
     ]
   }
 ];
 
-// Function to show current event
+function updateStats() {
+  document.getElementById("stats").innerText = `Health: ${health} ❤️ | Gold: ${gold} 🪙 | Progress: ${progress}%`;
+}
+
 function showEvent() {
   const event = events[currentEvent];
   document.getElementById("scenarioText").innerText = event.text;
   document.getElementById("scenarioImage").src = event.image;
-  document.getElementById("choiceA").innerText = event.choices[0].text;
-  document.getElementById("choiceB").innerText = event.choices[1].text;
-  document.getElementById("choiceC").innerText = event.choices[2].text;
+
+  // Buttons logic
+  ["A","B","C"].forEach((letter, index) => {
+    const btn = document.getElementById("choice" + letter);
+    if (event.choices[index]) {
+      btn.innerText = event.choices[index].text;
+      btn.style.display = "inline-block";
+    } else {
+      btn.style.display = "none";
+    }
+  });
+
   document.getElementById("feedbackText").innerText = "";
   updateStats();
 }
 
-// Function to update stats display
-function updateStats() {
-  document.getElementById("stats").innerText = `❤️ Health: ${health}  💰 Gold: ${gold}  🚶 Progress: ${progress}`;
-}
-
-// Function for when a choice is clicked
 function makeChoice(choiceIndex) {
-  const event = events[currentEvent];
-  const choice = event.choices[choiceIndex];
+  const choice = events[currentEvent].choices[choiceIndex];
   health += choice.health;
   gold += choice.gold;
-  progress += choice.progress;
-  document.getElementById("feedbackText").innerText = choice.result;
-  updateStats();
-  // Move to next event after a short delay
+  progress = choice.progress;
+  document.getElementById("feedbackText").innerText = choice.feedback;
+
+  currentEvent++;
   setTimeout(() => {
-    currentEvent++;
-    if (currentEvent >= events.length) {
-      document.getElementById("scenarioText").innerText = "🎉 Adventure Complete!";
+    if (currentEvent < events.length) {
+      showEvent();
+    } else {
+      document.getElementById("scenarioText").innerText = "🏆 Adventure Complete!";
       document.getElementById("scenarioImage").style.display = "none";
       document.getElementById("choiceA").style.display = "none";
       document.getElementById("choiceB").style.display = "none";
       document.getElementById("choiceC").style.display = "none";
-    } else {
-      showEvent();
     }
-  }, 2000);
+    updateStats();
+  }, 1500);
 }
 
-// Start game
-currentEvent = 0;
-showEvent();
+// Attach button events
+document.getElementById("choiceA").onclick = () => makeChoice(0);
+document.getElementById("choiceB").onclick = () => makeChoice(1);
+document.getElementById("choiceC").onclick = () => makeChoice(2);
 
-document.getElementById("choiceA").addEventListener("click", () => makeChoice(0));
-document.getElementById("choiceB").addEventListener("click", () => makeChoice(1));
-document.getElementById("choiceC").addEventListener("click", () => makeChoice(2));
+// Initial load
+showEvent();
 </script>
+
 </body>
 </html>
